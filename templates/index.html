@@ -3,23 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Speech Recognition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href=" {{url_for('static',filename= 'styles/stylesheet.css') }} ">
 </head>
 <body>
-
+<div id="Header">
+    <h1> Welcome to Speech Recognizer </h1>
+    <p> Upload a file with wav extension to get its speech recognized: <p>
+</div>
 <div id="speechContainer">
-<h1> Upload New File </h1>
    <form enctype="multipart/form-data" method="POST">
        <input type="file" name="file">
         <br>
-       <input type="submit" value="Transcribe">
+       <input type="submit" value="Transcribe" id="button">
    </form>
 </div>
 
-<div id="Header">
-    <br>
-    <p> Currently Empty <p>
-    <br>
+{% if transcript != ""  %} <!-- will show only if I have transcript-->
+<div id="speechContainer">
+    <h3> The Transcript of your file is: </h3>
+    <p> {{  transcript }} </p>
 </div>
+{% endif %}
 
 </body>
 </html>

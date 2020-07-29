@@ -4,8 +4,9 @@ import speech_recognition as sr
 app = Flask(__name__)
 
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
+    transcript = ""
     if request.method == "POST":  # if we posted the form
         print("FORM DATA RECEIVED")
         # here are 2 forms to make sure this file exist :
@@ -20,16 +21,15 @@ def index():
 
         if file:
             print(" Debug: Line 3")
-            recognizer= sr.Recognizer()  #initilaize instance of the speech recognition class
-            audioFile = sr.AudioFile(file) #pass in the file
+            recognizer = sr.Recognizer()  # initilaize instance of the speech recognition class
+            audioFile = sr.AudioFile(file)  # pass in the file
             with audioFile as source:  # reading the file
-                data= recognizer.record(source)  #through the recognizer
-            text = recognizer.recognize_google(data, key=None) #using Google API will return the text
-            print(text)
+                data = recognizer.record(source)  # through the recognizer
+            transcript = recognizer.recognize_google(data, key=None)  # using Google API will return the text
+
+    return render_template('index.html', transcript=transcript)
 
 
-
-    return render_template('index.html')
 # create an audio file from the file initially created
 # then initialize an instance from the speech recognition class
 # then pass that audio file into the record function of the recognizer module
